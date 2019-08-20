@@ -9,6 +9,7 @@ const emConverter = document.getElementById('em-converter');
 const baseSize = document.querySelector('#base-size');
 const px = document.querySelector('#px');
 const em = document.querySelector('#em');
+const colorButton = document.getElementById('color-button');
 const convertButton = document.querySelector('#button-convert');
 const resetButton = document.querySelector('#button-reset');
 
@@ -24,6 +25,14 @@ ${h}`;
 
 function colorRandomizer() {
 
+    function isDark(color) {
+        if (color < 130) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     let rColor = Math.floor(Math.random() * 256);
     let gColor = Math.floor(Math.random() * 256);
     let bColor = Math.floor(Math.random() * 256);
@@ -31,12 +40,40 @@ function colorRandomizer() {
 
     let randomColorWithOpacity = "rgba(" + rColor + "," + gColor + "," + bColor + ", " + opacityColor + ")";
     let randomColor = "rgb(" + rColor + "," + gColor + "," + bColor + ")";
+    let averageColorWithOpacity = (((rColor + gColor + bColor)/3) / opacityColor);
+    let averageColor = (rColor + gColor + bColor)/3;
 
     document.body.style.background = randomColorWithOpacity;
     document.getElementById('color-button').style.backgroundColor = randomColor;
     document.getElementById('button-convert').style.backgroundColor = randomColor;
     document.querySelector('#color-id').innerHTML = `${randomColorWithOpacity}`;
     document.querySelector('#button-color-id').innerHTML = `${randomColor}`;
+
+    if (isDark(averageColor) === true) {
+        document.getElementById('color-button').style.color = 'white';
+        convertButton.style.color = 'white';
+    } else {
+        document.getElementById('color-button').style.color = 'black';
+        convertButton.style.color = 'black';
+    }
+    if (isDark(averageColorWithOpacity) === true) {
+        colorPicker.style.color = 'white';
+        sizeChecker.style.color = 'white';
+        emConverter.style.color = 'white';
+        resetButton.style.color = 'white';
+        convertButton.style.border = '2px solid white';
+        resetButton.style.border = '2px solid white';
+        colorButton.style.border = '2px solid white';
+
+    } else {
+        colorPicker.style.color = 'black';
+        sizeChecker.style.color = 'black';
+        emConverter.style.color = 'black';
+        resetButton.style.color = 'black';
+        convertButton.style.border = '2px solid black';
+        resetButton.style.border = '2px solid white';
+        colorButton.style.border = '2px solid black';
+    }
 
 }
 
